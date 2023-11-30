@@ -3,27 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>项目展示</title>
+    <title>我的项目展示</title>
     <style>
-        /* 在这里添加您的 CSS 样式 */
+        /* 在此处添加您的 CSS 样式 */
         body { font-family: Arial, sans-serif; }
-        header, footer { background-color: #f1f1f1; padding: 10px; text-align: center; }
-        main { padding: 15px; }
+        .header { background-color: #f1f1f1; padding: 20px; text-align: center; }
+        .content { padding: 15px; }
+        .gallery { display: flex; flex-wrap: wrap; }
+        .gallery img { margin: 10px; width: 30%; }
+        .footer { background-color: #f1f1f1; padding: 10px; text-align: center; }
     </style>
 </head>
 <body>
-    <header>
-        <h1>我的项目</h1>
-    </header>
+    <div class="header">
+        <h1>我的项目 - 光线追踪器</h1>
+    </div>
 
-    <main>
+    <div class="content">
         <h2>项目简介</h2>
         <p>在这里写上您的项目介绍。</p>
-        <!-- 在这里添加更多内容 -->
-    </main>
+        
+        <h2>详细描述</h2>
+        <p>在这里添加您项目的详细描述。</p>
+        
+        <h2>图像展示</h2>
+        <div class="gallery">
+            <!-- 在这里插入图片 -->
+            <img src="image1.jpg" alt="示例图片1">
+            <img src="image2.jpg" alt="示例图片2">
+            <!-- 更多图片 -->
+        </div>
+    </div>
 
-    <footer>
-        <p>版权 © 2023 你的名字</p>
-    </footer>
+    <div class="footer">
+        <p>版权 © 2023 您的名字</p>
+    </div>
 </body>
 </html>
