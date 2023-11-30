@@ -8,100 +8,59 @@
       file: 1.Cylinder.png
       desc: Standard cone with radius 1 and height 2
 
-- name: Prologue
-  # extras: Disney BRDF, Phong shading
+- name: 2. Anti Aliasing with Super Sampling 
   images:
-    - name: Disney BRDF
-      file: fancy_mesh_73_phong.png
-      desc: Suzanne monkey head model with dielectric 0.5 roughness Disney BRDF material.
-    - name: No Phong Shading
-      file: fancy_mesh_73_nophong.png
-      desc: Same scene rendered with Phong shading disabled.
-  text: |
-    First, for context for the rest of the renders, all my renders use an implementation of a subset of the Disney BRDF (Burley 2012). This is a high quality physically based microfacet BRDF including proper Fresnel and other effects for dielectrics and metals. My implementation has three parameters: base colour, metalness and roughness. I also implemented Phong Shading for my meshes.
+    - name: With Anti-Aliasing
+      file: 2.Anti-alias-After.png
+      desc: Pic with Super-Sampling Anti-Aliasing (SSAA) 3x, super sample 9 rays per pixel.
+    - name: No Anti Aliasing
+      file: 2.Anti-alias-Before.png
+    - name: Stratified (Jittered) Samples Example (4x)
+      file: 2.random-samples.png
+      desc: This is an illustration of 4x SSAA, with one pixel using 16 random samples.
 
-    After implementing the Disney BRDF, I rendered a simple scene with both Blender's Cycles renderer and mine and they were a perfect match, which gave me confidence and allowed me to tune materials in Blender.
-
-- name: Texture Mapping
-  # extras: Surface emission
+- name: 3. Reflection
   images:
-    - name: Sky emission sphere
-      file: fancy_mesh_skybox.png
-      desc: Sky texture mapped onto the inside of a giant sphere.
-    - name: Painted mesh
-      file: fancy_mesh_paint.png
-      desc: Texture painted in Blender, also looks glitchy there.
-    - name: Varying material
-      file: fancy_mesh_cube.png
-      desc: Colour, metallness and roughness textures on a cube.
-  text: |
-    I implemented texture mapping by making my material take all of its attributes from a texture, and then implented the ability to create constant and image texture files from Lua. I added UV coordinates for meshes, cubes and spheres. Textures are filtered with bilinear filtering of the 4 nearest texels.
+    - name: With Reflection
+      file: 3.Reflection-After.png
+      desc: Using recursive ray tracing and maximum 6 iterations, 70% reflection of all material in pic.
+    - name: No Reflection
+      file: 3.Reflection-Before.png
 
-    This allows mapping base colour, metalness and roughness. I also added special support for emission textures and rendering inside spheres to support environment maps.
-
-- name: Soft Shadows
-  # extras: Lights in scene
+- name: 4. Refraction
   images:
-    - name: Soft shadows
-      file: cornell_10313_area.png
-      desc: Cornell box with area light
-  text: |
-    I implemented soft shadows by overhauling my lighting model so that lights are just spheres with an emission texture on them, just like environment maps. I then changed the lights array normally passed into the render to just a list of `GeometryNode`s to sample explicitly.
+    - name: Refraction Sphere
+      file: 4.Refraction-Sphere.png
+    - name: Refraction Cube
+      file: 4.Refraction-Cube.png
+      desc: With total internal reflection.
 
-    The path tracing integrator then at each bounce samples the cone of directions subtended by the sphere that would fit in the bounding box of the objects. This means at the moment only spherical area lights work correctly. This is more efficient than sampling a point on the sphere since only visible positions on the light are sampled.
-
-    This also allows me to render the area light as a physical object that exists in the world, or I can put it in the list to be sampled but not in the scene for an invisible light.
-
-- name: Glossy Reflection
+- name: 5. Glossy Reflection
   images:
-    - name: Glossy reflection
-      file: cornell_12361_gloss_area.png
-      desc: Cornell box with rough copper sphere
-    # - name: Cycles render
-    #   file: cornell_cycles_denoised.png
-    #   desc: Same scene in Cycles with denoising and less samples
-    - name: Glossy floor
-      file: cornell_10313_gloss_floor.png
-      desc: Cornell box with shiny dielectric floor
-  text: |
-    Glossy reflection falls out directly from the path tracing integrator and the specular lobe of the Disney BRDF, which uses an empirically based GGX distribution for the microfacet normals. I importance sample the GGX distribution term of the specular lobe so glossy reflection converges quickly.
+    - name: Glossy Reflection of all surface
+      file: 5.Glossy-reflection-After.png
+    - name: Without Glossy Reflection
+      file: 5.Glossy-reflection-Before.png
 
-    With path tracing the only difference between specular highlights and glossy reflection is whether the light was directly sampled!
-
-- name: Anti-aliasing
+- name: 6. Glossy Transmission
   images:
-    - name: Cube with no AA
-      file: fancy_mesh_cube_noaa.png
-      desc: Textured cube without anti-aliasing
-    - name: Cube with AA
-      file: fancy_mesh_cube.png
-      desc: Textured cube with anti-aliasing
-  text: |
-    Anti-aliasing is implemented as part of the same sampling framework that the path tracing uses. On each sample a random position in a square pixel region is picked to cast the ray for.
+    - name: Glossy Transmission
+      file: 6.Glossy-transmission-After.png
+    - name: Without Glossy Transmission
+      file: 6.Glossy-transmission-Before.png
 
-    For textures I only do bilinear filtering with 4 texels so for high resolution textures anti-aliasing is also necessary for textured surfaces to look correct.
-
-- name: "Final Scene: \"Realism\""
-  vertical: true
-  extras: Non-filtered textures
+- name: 7. Soft Shadow
   images:
-    - name: Final Scene
-      file: final_1097_mc6_4k.png
-      desc: My best scene
-    - name: With depth of field
-      file: final_1097_mc6_1080p_dof.png
-      desc: With artistic DOF
-  text: |
-    My goal was to render a scene that was as photorealistic as possible while having whimsical elements that clearly couldn't be real. The scene shows off high quality textures and models (not done by me) in a scene I arranged and tuned the materials for. I also tried to compose an artistically nice scene that tells a story. Uses a portal, a Mandelbox, global illumination, and various hand-tuned Disney BRDF materials.
+    - name: Two light souce with different light area
+      file: 7.Soft-shadow-After.png
+    - name: Without area light
+      file: 7.Soft-shadow-Before.png
 
-    While I didn't make most of the models and textures, I still spent over 15 hours arranging, tuning materials and light, composing the scene, and importing various model formats.
-
-- name: Multithreading & Bar
+- name: 9. Perlin Noise Material
   images:
-    - name: Progress bar
-      file: progress_crop.png
-      desc: Console output of a render
-  text: |
-    I made my renderer multithreaded using all available hyperthreads using the C++11 threading library. It distributes rows of image alternately to each thread for evenly distributed difficulty. I implemented a multi-threaded progress bar with proper locking to print nice console progress with ANSI escape codes.
-
-    It scales linearly with number of cores. I rendered most images on this page on a 64 core pre-emptible Google Cloud instance for only $0.50 an hour.
+    - name: Wood-like Material
+      file: 9.Perlin-Wood.png
+      desc: Applying perlin noise on sin waves and formula of circle.
+    - name: Marble-like Material
+      file: 9.Perlin-Marble.png
+      desc: Combining two perlin noise.
