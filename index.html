@@ -1,42 +1,243 @@
+---
+---
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的项目展示</title>
-    <style>
-        /* 在此处添加您的 CSS 样式 */
-        body { font-family: Arial, sans-serif; }
-        .header { background-color: #f1f1f1; padding: 20px; text-align: center; }
-        .content { padding: 15px; }
-        .gallery { display: flex; flex-wrap: wrap; }
-        .gallery img { margin: 10px; width: 30%; }
-        .footer { background-color: #f1f1f1; padding: 10px; text-align: center; }
-    </style>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Yūbinkyoku 🏣 - Tristan Hume</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="vendor/normalize.css">
+  <link rel="stylesheet" href="vendor/skeleton.css">
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <!-- <link rel="icon" type="image/png" href="images/favicon.png"> -->
+  <style type="text/css">
+  .render-desc {
+    max-width: 450px;
+    min-height: 100px;
+    flex-grow: 1;
+
+    background-color: #f6f6f6;
+    border-radius: 10px;
+    padding: 10px;
+    padding-right: 15px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .render-desc p {
+    margin-bottom: 0px;
+  }
+
+  .render-desc h5 {
+    margin-bottom: 0px;
+  }
+
+  .render-thumb {
+    max-height: 100px;
+    border-radius: 10px;
+  }
+
+  img.render-thumb {
+    max-width: 160px;
+  }
+
+  video.render-thumb {
+    width: 100px;
+    height: 100px;
+  }
+
+  .render-info {
+    margin-left: 10px;
+  }
+
+  .render-active {
+    background-color: #f0f0ff;
+  }
+
+  .section {
+    margin-bottom: 100px;
+  }
+
+  .hide {
+    display: none;
+  }
+
+  .render-descs {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .render-full-box {
+    /*min-height: 800px;*/
+  }
+  </style>
 </head>
 <body>
-    <div class="header">
-        <h1>我的项目 - 光线追踪器</h1>
-    </div>
 
-    <div class="content">
-        <h2>项目简介</h2>
-        <p>在这里写上您的项目介绍。</p>
-        
-        <h2>详细描述</h2>
-        <p>在这里添加您项目的详细描述。</p>
-        
-        <h2>图像展示</h2>
-        <div class="gallery">
-            <!-- 在这里插入图片 -->
-            <img src="image1.jpg" alt="示例图片1">
-            <img src="image2.jpg" alt="示例图片2">
-            <!-- 更多图片 -->
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="container u-max-full-width">
+    <div class="row" style="margin-top: 50px;">
+      <div class="seven columns">
+        <h1>Yūbinkyoku 🏣</h1>
+        <h5><a href="//thume.ca">Tristan Hume</a>'s photorealistic path tracer made for CS488</h5>
+      </div>
+    </div>
+    <div class="row" style="margin-top: 0px;">
+      <div class="seven columns">
+        <p>
+          Made as my <a href="https://www.student.cs.uwaterloo.ca/~cs488/gallery-A5.html">final project for UWaterloo's CS488 Graphics class</a>, this is the demo page for my path tracing renderer made with the goal of maximum photorealism. I put about a full time month's worth of work effort into this project, way more than required, since I was having a lot of fun and had a final scene in mind I wanted to reach.
+        </p>
+        <p>
+          It's named after the Japanese word for "post office" because it made so little sense as the name for a ray tracer that it made me burst out laughing, and the fact that there's an emoji for it sealed the deal. Why the idea of naming it after the Japanese word for "post office" occurred to me in the first place is a long story.
+        </p>
+        <p>
+          It's not open source since it uses some code (e.g OBJ file loading) from the course, and there are better open source renderers out there. But if you want more technical details you can read the <a href="report.pdf">project report</a>, although it's written with an intended audience of the course TAs.
+        </p>
+        <!-- <h2>Features</h2> -->
+      </div>
+    </div>
+    <div class="row" style="margin-top: 0px; margin-bottom: 50px;">
+      <img src="renders/final_1097_mc6_preview.jpg" class="u-max-full-width" alt="My Final Scene"/>
+    </div>
+    {% for section in site.data.sections %}
+    {% assign sectionid = forloop.index %}
+    <div class="row section">
+      {% if section.vertical and section.images == nil %}
+      <div class="seven columns">
+      {% elsif section.vertical %}
+      <div class="ten columns">
+      {% else %}
+      <div class="four columns">
+      {% endif %}
+        <h3>{{section.name}}</h3>
+        <div>
+          {{ section.text | markdownify }}
+          {% if section.extras %}
+          <p><strong>Extras shown:</strong> {{section.extras}}</p>
+          {% endif %}
         </div>
-    </div>
+        {% if section.images %}
+        <div class="render-descs">
+        {% for image in section.images %}
+          <div class="render-desc desc-{{ sectionid }} {% if forloop.first %}render-active{% endif %}"
+            id="render-desc-{{ sectionid }}-{{ forloop.index }}"
+            data-file="{{ image.file }}"
+            data-sectionid="{{ sectionid }}"
+            data-renderid="{{ forloop.index }}">
 
-    <div class="footer">
-        <p>版权 © 2023 您的名字</p>
+            {% capture renderfile %}{{ image.file }}{% endcapture %}
+            {% capture renderid %}render-thumb-{{ sectionid }}-{{ forloop.index }}{% endcapture %}
+            {% assign renderclass = "render-thumb" %}
+            {% include render.html %}
+
+            <div class="render-info">
+              <h5>{{image.name}}</h5>
+              {{image.desc | markdownify }}
+            </div>
+          </div>
+        {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+      {% if section.images %}
+      {% if section.vertical %}
+      <div>
+      {% else %}
+      <div class="eight columns render-full-box">
+      {% endif %}
+        {% for image in section.images %}
+          {% capture renderfile %}{{ image.file }}{% endcapture %}
+          {% capture renderclass %}
+          u-max-full-width
+          render-full-{{ sectionid }}
+          img-render-full
+          {% if forloop.first != true %}hide{% endif %}
+          {% endcapture %}
+          {% capture renderid %}render-full-{{ sectionid }}-{{ forloop.index }}{% endcapture %}
+          {% include render.html %}
+        {% endfor %}
+      </div>
+      {% endif %}
     </div>
+    {% endfor %}
+    <div class="row" style="margin-top: 50px;">
+      <div class="seven columns">
+        <h5>Website Credits</h5>
+        <p>
+          CSS template thanks to <a href="http://getskeleton.com/">Skeleton</a>, magnifying glass thanks to <a href="https://github.com/paulkr/blowup.js">blowup.js</a>. The image and animation gallery, the rest of the page, and the renders on it I did myself.
+        </p>
+      </div>
+    </div>
+  </div>
+
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+<script type="text/javascript">
+
+function selectRender(renderDesc) {
+  // console.log(renderDesc.dataset);
+
+  // Deselect all
+  var sectionRenders = document.querySelectorAll(".desc-"+renderDesc.dataset.sectionid);
+  sectionRenders.forEach(function(other) {
+    other.classList.remove('render-active');
+  });
+  renderDesc.classList.add('render-active');
+
+  // Deselect all
+  var sectionRenders = document.querySelectorAll(".render-full-"+renderDesc.dataset.sectionid);
+  sectionRenders.forEach(function(other) {
+    other.classList.add('hide');
+  });
+  var selectedFullRender = document.getElementById("render-full-"+renderDesc.dataset.sectionid + "-" + renderDesc.dataset.renderid);
+  selectedFullRender.classList.remove('hide');
+
+  // var fullRenderImg = document.getElementById("render-full-"+renderDesc.dataset.sectionid);
+  // fullRenderImg.src = "renders/" + renderDesc.dataset.file;
+}
+
+var renders = document.querySelectorAll(".render-desc");
+renders.forEach(function(renderDesc) {
+  renderDesc.addEventListener("mouseenter", function( event ) {
+    selectRender(renderDesc);
+  });
+  renderDesc.addEventListener("touchstart", function( event ) {
+    selectRender(renderDesc);
+  });
+});
+</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="vendor/blowup.js"></script>
+<script type="text/javascript">
+  $(document).ready(function () {
+      var renders = document.querySelectorAll(".img-render-full");
+      renders.forEach(function(render) {
+        $(render).blowup({scale: 4});
+      });
+  });
+</script>
 </body>
 </html>
