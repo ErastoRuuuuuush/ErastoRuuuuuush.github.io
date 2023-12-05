@@ -56,6 +56,13 @@
     - name: Without area light
       file: 7.Soft-shadow-Before.png
 
+- name: 8. Photon Mapping
+  images:
+    - name: With 10,000,000 initial photons
+      file: 8.Photon-Mapping-After.png
+    - name: Recursive Ray Tracing
+      file: 8.Photon-Mapping-Before.png
+
 - name: 9. Perlin Noise Material
   images:
     - name: Wood-like Material
