@@ -71,3 +71,15 @@
     - name: Marble-like Material
       file: 9.Perlin-Marble.png
       desc: Combining two perlin noise.
+
+- name: 10. Final Scene
+  images:
+    - name: Final Scene
+      file: 10.Final.png
+
+- name: Extra: Phong Shading
+  images:
+    - name: With Phong Shading
+      file: Phong-Shading-After.png
+    - name: Without Phong Shading
+      file: Phong-Shading-Before.png
