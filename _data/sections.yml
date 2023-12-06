@@ -77,7 +77,7 @@
     - name: Final Scene
       file: 10.Final.png
 
-- name: Extra: Phong Shading
+- name: Phong Shading
   images:
     - name: With Phong Shading
       file: Phong-Shading-After.png
